@@ -1,10 +1,15 @@
 <?php
 /*
 Plugin Name: Kamahra Unique Words
-Description: Extract unique words from input text using a custom separator.
-Version: 1.0
-Author: Your Name
+Plugin URI: https://github.com/amenaregal/kamahra-unique-words
+Description: Extracts unique words from input text using a custom separator, with real-time processing and clipboard support.
+Version: 1.0.0-beta
+Author: Amena Sajid
+Author URI: 
+License: GPLv2 or later
+Text Domain: kamahra-unique-words
 */
+
 
 // ✅ Step 1: Register JS and CSS assets
 function kamahra_unique_words_register_assets() {
@@ -13,7 +18,7 @@ function kamahra_unique_words_register_assets() {
         plugins_url('assets/unique-words.js', __FILE__),
         array(),
         null,
-        true // Load in footer
+        true
     );
 
     wp_register_style(
@@ -24,11 +29,10 @@ function kamahra_unique_words_register_assets() {
 add_action('init', 'kamahra_unique_words_register_assets');
 
 
-// ✅ Step 2: Define shortcode and return HTML with dynamic styles
+// ✅ Step 2: Define shortcode and return HTML with dynamic styles + Help Text
 function kamahra_unique_words_shortcode() {
     ob_start();
 
-    // Fetch saved colors or use defaults
     $bg_color = get_option('kamahra_bg_color', '#F9F7E8');
     $text_color = get_option('kamahra_text_color', '#1F1F1F');
     $button_color = get_option('kamahra_button_color', '#FF2FB2');
@@ -72,23 +76,41 @@ function kamahra_unique_words_shortcode() {
         .kuw-help {
             font-style: italic;
             color: #999999;
+            display: block;
+            margin: 4px 0 8px 0;
+            font-size: 0.9em;
+        }
+
+        #kuw-warning {
+            display: none;
+            color: #cc3300;
+            font-size: 0.9em;
+            margin-top: -0.5em;
+            margin-bottom: 1em;
         }
     </style>
 
     <div id="kamahra-unique-words" class="kamahra-plugin-wrapper">
 
-        <label for="kuw-input" class="kuw-label">Input Text</label><br>
+        <!-- ✅ Input Field with Help Text -->
+        <label for="kuw-input" class="kuw-label">Input Text</label>
+        <small class="kuw-help">Paste or type the text you want to analyze.</small>
         <textarea id="kuw-input" class="kuw-textarea" rows="6" placeholder="Enter your text here..."></textarea>
 
-        <label for="kuw-separator" class="kuw-label">Output Word Separator</label><br>
+        <!-- ✅ Warning for soft character limit -->
+        <p id="kuw-warning">Input is too long; performance may be affected.</p>
+
+        <!-- ✅ Separator Field with Help Text -->
+        <label for="kuw-separator" class="kuw-label">Output Word Separator</label>
+        <small class="kuw-help">Use any symbol to separate unique words (e.g., comma, |, space).</small>
         <input type="text" id="kuw-separator" class="kuw-input" placeholder=", ">
 
-        <label for="kuw-output" class="kuw-label">Unique Words</label><br>
+        <!-- ✅ Output Field with Help Text -->
+        <label for="kuw-output" class="kuw-label">Unique Words</label>
+        <small class="kuw-help">These are the unique words extracted from your input.</small>
         <textarea id="kuw-output" class="kuw-textarea" rows="6" readonly placeholder="Unique words will appear here."></textarea>
 
-        <p class="kuw-help"><em>Note: Separator must be typed before pasting input.</em></p>
         <button id="kuw-copy-button">Copy to Clipboard</button>
-
     </div>
     <?php
     return ob_get_clean();
