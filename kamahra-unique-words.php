@@ -102,8 +102,13 @@ function kamahra_unique_words_shortcode() {
 
         <!-- ✅ Separator Field with Help Text -->
         <label for="kuw-separator" class="kuw-label">Output Word Separator</label>
-        <small class="kuw-help">Use any symbol to separate unique words (e.g., comma, |, space).</small>
+        <small class="kuw-help">Use any symbol (e.g., comma, |, space). Type <code>\n</code> for new lines.</small>
+
         <input type="text" id="kuw-separator" class="kuw-input" placeholder=", ">
+
+        <!-- ✅ Enter Button -->
+<button id="kuw-process-button" style="margin-bottom: 1em;">Enter</button>
+
 
         <!-- ✅ Output Field with Help Text -->
         <label for="kuw-output" class="kuw-label">Unique Words</label>
@@ -111,6 +116,7 @@ function kamahra_unique_words_shortcode() {
         <textarea id="kuw-output" class="kuw-textarea" rows="6" readonly placeholder="Unique words will appear here."></textarea>
 
         <button id="kuw-copy-button">Copy to Clipboard</button>
+        
     </div>
     <?php
     return ob_get_clean();
