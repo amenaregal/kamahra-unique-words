@@ -47,3 +47,7 @@
 .kuw-radio-group label {
     cursor: pointer;
 }
+#kamahra-unique-words textarea {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+}

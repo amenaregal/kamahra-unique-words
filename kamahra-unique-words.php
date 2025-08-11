@@ -3,6 +3,8 @@
 Plugin Name: Kamahra Unique Words
 Plugin URI: https://github.com/amenaregal/kamahra-unique-words
 Description: Extracts unique words from input text using a custom separator, with real-time processing and clipboard support.
+Use the [kamahra_unique_words] shortcode to display the tool on any page or post.
+Customize plugin colors from Settings → Kamahra Colors.
 Version: 1.0.0-beta
 Author: Amena Sajid
 Author URI: 
@@ -33,9 +35,10 @@ add_action('init', 'kamahra_unique_words_register_assets');
 function kamahra_unique_words_shortcode() {
     ob_start();
 
-    $bg_color = get_option('kamahra_bg_color', '#F9F7E8');
-    $text_color = get_option('kamahra_text_color', '#1F1F1F');
-    $button_color = get_option('kamahra_button_color', '#FF2FB2');
+   $bg_color = get_option('kamahra_bg_color', '#FFFFFF');    // White background default
+$text_color = get_option('kamahra_text_color', '#000000'); // Black text default
+$button_color = get_option('kamahra_button_color', '#007BFF'); // Default blue button
+
     ?>
 
     <style>
@@ -230,3 +233,10 @@ function kamahra_register_settings() {
     );
 }
 add_action('admin_init', 'kamahra_register_settings');
+
+function kamahra_activate_defaults() {
+    add_option('kamahra_bg_color', '#FFFFFF');
+    add_option('kamahra_text_color', '#000000');
+    add_option('kamahra_button_color', '#007BFF');
+}
+register_activation_hook(__FILE__, 'kamahra_activate_defaults');
